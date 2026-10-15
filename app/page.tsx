@@ -419,23 +419,39 @@ export default function RentalLandingPage() {
                 )}
               </div>
 
-              {/* Field 2: Tanggal & Waktu Mulai (Trigger Modal Range Calendar 21st.dev) */}
-              <div
-                onClick={() => setIsDateTimeModalOpen(true)}
-                className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3 cursor-pointer select-none"
-              >
-                <Calendar className="w-5 h-5 text-slate-400 shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
-                    Tanggal &amp; Waktu Mulai
-                  </span>
-                  <span className="w-full text-xs font-bold text-slate-900 block truncate">
-                    {startDateStr}
-                  </span>
+              {/* Field 2: Tanggal & Waktu Mulai (Trigger Popover Balioh) */}
+              <div className="md:col-span-4 relative">
+                <div
+                  onClick={() => setIsDateTimeModalOpen(!isDateTimeModalOpen)}
+                  className="bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3 cursor-pointer select-none"
+                >
+                  <Calendar className="w-5 h-5 text-slate-400 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
+                      Tanggal &amp; Waktu Mulai
+                    </span>
+                    <span className="w-full text-xs font-bold text-slate-900 block truncate">
+                      {startDateStr}
+                    </span>
+                  </div>
+                  <span className="text-xs text-slate-400">▾</span>
                 </div>
-                <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded font-bold border border-blue-200 shrink-0">
-                  Ubah
-                </span>
+
+                {/* Popover Kalender Balioh Melayang */}
+                <RentalDateTimeModal
+                  isOpen={isDateTimeModalOpen}
+                  onClose={() => setIsDateTimeModalOpen(false)}
+                  onConfirm={({ startDate, endDate, pickupTime, totalDays }) => {
+                    const fromMonth = MONTH_NAMES_SHORT[startDate.getMonth()];
+                    const toMonth = MONTH_NAMES_SHORT[endDate.getMonth()];
+                    const fromDay = DAY_NAMES_SHORT[startDate.getDay()];
+                    const toDay = DAY_NAMES_SHORT[endDate.getDay()];
+
+                    setStartDateStr(`${fromDay}, ${startDate.getDate()} ${fromMonth}, ${pickupTime}`);
+                    setEndDateStr(`${toDay}, ${endDate.getDate()} ${toMonth}, ${pickupTime}`);
+                    setDurationDays(totalDays);
+                  }}
+                />
               </div>
 
               {/* Field 3: Durasi Sewa */}
@@ -838,22 +854,6 @@ export default function RentalLandingPage() {
           </div>
         </div>
       </footer>
-
-      {/* ── MODAL RANGE CALENDAR (OriginUI) + 30-MIN TIME SLOTS (21st.dev Appointment) ── */}
-      <RentalDateTimeModal
-        isOpen={isDateTimeModalOpen}
-        onClose={() => setIsDateTimeModalOpen(false)}
-        onConfirm={({ startDate, endDate, pickupTime, returnTime, totalDays }) => {
-          const fromMonth = MONTH_NAMES_SHORT[startDate.getMonth()];
-          const toMonth = MONTH_NAMES_SHORT[endDate.getMonth()];
-          const fromDay = DAY_NAMES_SHORT[startDate.getDay()];
-          const toDay = DAY_NAMES_SHORT[endDate.getDay()];
-
-          setStartDateStr(`${fromDay}, ${startDate.getDate()} ${fromMonth}, ${pickupTime}`);
-          setEndDateStr(`${toDay}, ${endDate.getDate()} ${toMonth}, ${returnTime}`);
-          setDurationDays(totalDays);
-        }}
-      />
 
       {/* ── MODAL BOOKING CEPAT (Anti-slop: 2 input pendek) ── */}
       {selectedCar && (
