@@ -374,7 +374,7 @@ export default function RentalLandingPage() {
                         </span>
 
                         {/* List Items */}
-                        <div className="max-h-60 overflow-y-auto space-y-1 pr-1">
+                        <div className="max-h-60 overflow-y-auto space-y-1 pr-1 no-scrollbar">
                           {filteredLocations.map((loc) => (
                             <button
                               key={loc.id}
