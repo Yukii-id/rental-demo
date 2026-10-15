@@ -88,12 +88,16 @@ export function BaliohFooter() {
             </ul>
           </div>
 
-          {/* Kolom 4: Brand & Ringkasan (Logo Wordmark Yukii) */}
+          {/* Kolom 4: Brand & Ringkasan (Logo Asli Yukii) */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="text-2xl font-black tracking-tight font-['Space_Grotesk'] text-white">
-                Yukii<span className="text-blue-500">.</span>
-              </span>
+              <div className="h-6 w-auto flex items-center">
+                <img
+                  src="/assets/logo/yukii-logo.svg"
+                  alt="Yukii Logo"
+                  className="h-6 w-auto object-contain brightness-0 invert"
+                />
+              </div>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase">
                 INDONESIA
               </span>
