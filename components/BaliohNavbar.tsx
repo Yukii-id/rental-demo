@@ -31,18 +31,13 @@ export function BaliohNavbar({
     <nav className="bg-white border-b border-slate-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Sisi Kiri: Logo Yukii & Kota */}
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2 group">
-              <img
-                src="/assets/logo/yukii.png"
-                alt="Yukii Logo"
-                className="h-8 w-auto object-contain"
-              />
-              <span className="text-xl font-black tracking-tight text-slate-950 font-['Space_Grotesk']">
+          {/* Sisi Kiri: Logo Yukii Saja (Wordmark Yukii.id Tanpa Duplikasi Teks Tambahan) & Kota */}
+          <div className="flex items-center gap-5">
+            <Link href="/" className="flex items-center gap-3 group">
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-950 font-['Space_Grotesk'] hover:opacity-85 transition-opacity">
                 Yukii<span className="text-blue-600">.</span>
               </span>
-              <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 uppercase tracking-wider bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded-full transition-colors border border-slate-200">
+              <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 uppercase tracking-wider bg-slate-100 hover:bg-slate-200 px-2.5 py-0.5 rounded-full transition-colors border border-slate-200">
                 <MapPin className="w-3 h-3 text-blue-600" />
                 {activeCity}
               </span>
