@@ -33,6 +33,8 @@ import {
   CarItem,
 } from '@/lib/rental-data';
 import { formatRupiah } from '@/lib/utils';
+import { BaliohNavbar } from '@/components/BaliohNavbar';
+import { BaliohFooter } from '@/components/BaliohFooter';
 import { RentalDateTimeModal } from '@/components/RentalDateTimeModal';
 
 const MONTH_NAMES_SHORT = [
@@ -161,80 +163,8 @@ export default function RentalLandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
-      {/* ── TOP BANNER DEMO SUITE ── */}
-      <div className="bg-slate-950 text-white text-xs py-1.5 px-4 border-b border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-              DEMO SUITE
-            </span>
-            <span className="text-slate-300">
-              Master Paket: <strong>RENTAL_SERVICE</strong> (Rental Kendaraan & Sewa Armada)
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-slate-400">
-            <span>Powered by <strong>Yukii.id</strong></span>
-            <a
-              href="https://admin.yukii.id"
-              target="_blank"
-              rel="noreferrer"
-              className="text-blue-400 hover:text-blue-300 font-medium underline transition-colors"
-            >
-              admin.yukii.id
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* ── NAVBAR (Gaya Balioh Clean) ── */}
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-1.5">
-              <span className="text-2xl font-black tracking-tight text-slate-950 font-['Space_Grotesk']">
-                balioh<span className="text-blue-600">.</span>
-              </span>
-              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider ml-1 bg-slate-100 px-1.5 py-0.5 rounded">
-                Tangerang
-              </span>
-            </Link>
-
-            <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-700">
-              <a href="#armada" className="hover:text-blue-600 transition-colors">Mobil</a>
-              <a href="#armada" className="hover:text-blue-600 transition-colors">Motor</a>
-              <a href="#armada" className="hover:text-blue-600 transition-colors">Bus</a>
-              <a href="#armada" className="hover:text-blue-600 transition-colors flex items-center gap-1">
-                <span>Minibus</span>
-                <span className="text-xs text-slate-400">▾</span>
-              </a>
-              <a href="#armada" className="hover:text-blue-600 transition-colors flex items-center gap-1">
-                <span>Niaga</span>
-                <span className="text-xs text-slate-400">▾</span>
-              </a>
-              <a href="#layanan" className="hover:text-blue-600 transition-colors">Layanan</a>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <a
-              href="https://wa.me/628111500099?text=Halo%20Balioh%20Rental%20Tangerang,%20saya%20ingin%20tanya%20sewa%20mobil"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors hidden sm:block"
-            >
-              Masuk
-            </a>
-            <a
-              href="https://wa.me/628111500099?text=Halo%20Balioh%20Rental%20Tangerang,%20saya%20ingin%20daftar%20sewa%20mobil"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all"
-            >
-              Daftar
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* ── HEADER NAVBAR BALIOH RESMI ── */}
+      <BaliohNavbar activeCity="Tangerang" />
 
       {/* ── HERO SECTION (Identik Balioh: Navy Background + Center Title + Search Box + 3 Pillars) ── */}
       <section className="relative bg-[#0b132b] text-white pt-8 pb-16 lg:pt-10 lg:pb-20 border-b border-slate-800">
@@ -846,54 +776,8 @@ export default function RentalLandingPage() {
         </div>
       </section>
 
-      {/* ── FOOTER RESMI DEMO ── */}
-      <footer className="bg-slate-900 text-white py-12 border-t border-slate-800 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
-            <div className="md:col-span-2 space-y-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">
-                  <Car className="w-4 h-4" />
-                </div>
-                <span className="text-lg font-bold">Yukii Rental Kendaraan</span>
-              </div>
-              <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
-                Demo showcase sistem rental mobil dan sewa armada terpadu. Dilengkapi modul cek ketersediaan, booking DP instan, opsi Lepas Kunci vs Dengan Sopir, dan manajemen korporat.
-              </p>
-              <div className="text-xs text-slate-400">
-                <span className="block font-semibold text-slate-300">Kantor Operasional Hub:</span>
-                <span>Tangerang & BSD City, Banten, Indonesia</span>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3">Layanan</h4>
-              <ul className="space-y-2 text-xs text-slate-400">
-                <li>Sewa Mobil Lepas Kunci</li>
-                <li>Sewa Mobil Dengan Driver</li>
-                <li>Antar Jemput Bandara Soetta</li>
-                <li>Kontrak Bulanan Perusahaan</li>
-                <li>Sewa Wedding Car</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3">Teknologi</h4>
-              <ul className="space-y-2 text-xs text-slate-400">
-                <li>Modul: <strong>RENTAL_SERVICE</strong></li>
-                <li>Platform: <strong>Next.js + Tailwind CSS</strong></li>
-                <li>Arsitektur: <strong>Anti-Slop Clean Design</strong></li>
-                <li>Master Portal: <strong>admin.yukii.id</strong></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <p>© {new Date().getFullYear()} Yukii.id & PT Deo Vatta Corp. All rights reserved.</p>
-            <p>Live Demo deployed at <strong>rental.deovatta.my.id</strong></p>
-          </div>
-        </div>
-      </footer>
+      {/* ── FOOTER RESMI BALIOH ── */}
+      <BaliohFooter />
 
       {/* ── MODAL BOOKING CEPAT (Anti-slop: 2 input pendek) ── */}
       {selectedCar && (
