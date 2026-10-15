@@ -94,8 +94,8 @@ export function BaliohFooter() {
               <span className="text-xl font-black tracking-tight font-['Space_Grotesk'] text-white">
                 balioh<span className="text-blue-500">.</span>
               </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">
-                TANGERANG
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase">
+                INDONESIA
               </span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">

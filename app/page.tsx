@@ -402,15 +402,15 @@ export default function RentalLandingPage() {
                 <span className="text-xs text-slate-400">▾</span>
               </div>
 
-              {/* Tombol Search (Navy Button with Magnifying Glass) */}
+              {/* Tombol Search (Navy Button with Magnifying Glass ke /booking) */}
               <div className="md:col-span-1">
-                <a
-                  href="#armada"
+                <Link
+                  href={`/booking?location=${encodeURIComponent(selectedLocation)}&type=${rentType}&date=${encodeURIComponent(startDateStr)}&duration=${durationDays}`}
                   className="w-full h-11 rounded-xl bg-[#0b132b] hover:bg-blue-600 text-white flex items-center justify-center transition-colors shadow-md"
                   title="Cari Mobil"
                 >
                   <Search className="w-5 h-5" />
-                </a>
+                </Link>
               </div>
             </div>
 
