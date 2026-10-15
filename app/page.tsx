@@ -690,73 +690,113 @@ export default function RentalLandingPage() {
         </div>
       </section>
 
-      {/* ── SECTION JENIS LAYANAN (Inspirasi GoAja) ── */}
-      <section id="layanan" className="py-14 sm:py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider">
-              Layanan Komprehensif
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Jenis Layanan Rental Mobil dari GoAja & Yukii
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Fleksibel disesuaikan untuk kebutuhan pribadi, perjalanan dinas korporat, hingga event pernikahan istimewa di Jabodetabek.
+      {/* ── SECTION JENIS LAYANAN (100% Identik GoAja Dual Card Grid) ── */}
+      <section id="layanan" className="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          {/* Paragraf Pengantar Persis GoAja */}
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed font-normal">
+              Kami menyediakan berbagai layanan rental mobil yang fleksibel dan dapat disesuaikan dengan kebutuhan perjalanan Anda. Dengan kualitas layanan terbaik, GoAja siap menjadi mitra mobilitas terpercaya Anda di Jabodetabek!
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES_DATA.map((srv) => (
-              <div
-                key={srv.id}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center">
-                      {serviceIcons[srv.icon] || <Car className="w-6 h-6 text-blue-600" />}
-                    </div>
-                    {srv.badge && (
-                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">
-                        {srv.badge}
-                      </span>
-                    )}
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-base">{srv.title}</h3>
-                    <p className="text-xs font-semibold text-blue-600 mt-0.5">{srv.subtitle}</p>
-                    <p className="text-xs text-slate-600 leading-relaxed mt-2">{srv.description}</p>
-                  </div>
-
-                  <div className="space-y-1.5 pt-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      Benefit Utama:
-                    </span>
-                    {srv.features.map((feat, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs text-slate-600">
-                        <BadgeCheck className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+          {/* Dual Card Grid GoAja */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+            {/* Kartu 1: Sewa Mobil Dengan Driver (Background Oranye #F15A24) */}
+            <div className="bg-[#F15A24] rounded-[32px] p-8 sm:p-10 text-slate-900 shadow-xl flex flex-col justify-between transition-transform hover:-translate-y-1 duration-300">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#1A1A1A] tracking-tight">
+                    Sewa Mobil Dengan Driver
+                  </h3>
+                  <p className="text-white text-sm sm:text-[15px] mt-3 leading-relaxed">
+                    Layanan ini cocok untuk Anda yang ingin menikmati perjalanan tanpa repot menyetir. Biarkan driver profesional kami mengantar Anda ke tujuan dengan aman dan nyaman.
+                  </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-100">
-                  <a
-                    href={`https://wa.me/628111500099?text=Halo%20Yukii%20Rental,%20saya%20tertarik%20dengan%20layanan%20${encodeURIComponent(
-                      srv.title
-                    )}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <span>{srv.actionText}</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </a>
+                {/* Checklist Keuntungan (Hitam Bold dengan Centang) */}
+                <div className="space-y-3 pt-2">
+                  {[
+                    'Driver Berpengalaman',
+                    'Tepat Waktu dan Efisien',
+                    'Keamanan dan Kenyamanan Maksimal',
+                    'Cocok Untuk Segala Kebutuhan',
+                    'Hemat Energi dan Fokus Pada Aktivitas Anda',
+                    'Bebas Stres Mengemudi',
+                    'Pilihan Mobil Lebih Beragam',
+                  ].map((benefit, idx) => (
+                    <div key={idx} className="flex items-center gap-3 text-sm sm:text-[15px] font-bold text-[#1A1A1A]">
+                      <span className="text-base font-black">✔</span>
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+
+              {/* Tombol Aksi Hitam Kapsul Full Width */}
+              <div className="pt-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRentType('dengan_sopir');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="w-full py-4 rounded-full bg-[#1A1A1A] hover:bg-black text-white text-sm sm:text-base font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg"
+                >
+                  <span>Reservasi Sekarang</span>
+                  <span className="text-lg">→</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Kartu 2: Sewa Mobil Lepas Kunci (Background Putih Border & Notice Oranye Muda) */}
+            <div className="bg-white rounded-[32px] p-8 sm:p-10 text-slate-900 border border-slate-200 shadow-xl flex flex-col justify-between transition-transform hover:-translate-y-1 duration-300">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#F15A24] tracking-tight">
+                    Sewa Mobil Lepas Kunci
+                  </h3>
+                  <p className="text-slate-600 text-sm sm:text-[15px] mt-3 leading-relaxed">
+                    GoAja juga menyediakan layanan rental mobil lepas kunci yang dirancang khusus untuk kebutuhan perusahaan. Layanan ini memberikan fleksibilitas bagi bisnis Anda dalam mengelola transportasi.
+                  </p>
+                </div>
+
+                {/* Checklist Keuntungan */}
+                <div className="space-y-3 pt-2">
+                  {[
+                    'Privasi Lebih Terjaga',
+                    'Fleksibilitas Waktu dan Rute',
+                    'Hemat Biaya',
+                  ].map((benefit, idx) => (
+                    <div key={idx} className="flex items-center gap-3 text-sm sm:text-[15px] font-bold text-slate-900">
+                      <span className="text-base font-black text-slate-900">✔</span>
+                      <span>{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Warning / Notice Badge Oranye Muda Khas GoAja */}
+                <div className="bg-[#FFEDE4] border border-[#F15A24]/30 rounded-2xl p-4 flex items-center gap-3 text-xs sm:text-sm font-bold text-[#C84010]">
+                  <span className="text-base shrink-0">⚠️</span>
+                  <span>Layanan Ini Hanya Untuk Perusahaan Yang Telah Terverifikasi.</span>
+                </div>
+              </div>
+
+              {/* Tombol Aksi Oranye Kapsul Full Width */}
+              <div className="pt-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRentType('lepas_kunci');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="w-full py-4 rounded-full bg-[#F15A24] hover:bg-[#d84a1a] text-white text-sm sm:text-base font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg"
+                >
+                  <span>Reservasi Sekarang</span>
+                  <span className="text-lg">→</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
