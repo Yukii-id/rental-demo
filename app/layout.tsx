@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Rental Mobil Tangerang & Bandara Soetta | Demo Sewa Kendaraan Yukii',
+  title: 'Yukii Rental — Rental Mobil Terpercaya Lepas Kunci & Dengan Sopir',
   description:
     'Sewa mobil lepas kunci dan dengan driver profesional di area Tangerang, BSD City, dan Bandara Soekarno-Hatta. Armada terlengkap, harga jujur, dan bantuan 24/7.',
   keywords: [

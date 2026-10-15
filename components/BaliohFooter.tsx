@@ -90,9 +90,14 @@ export function BaliohFooter() {
 
           {/* Kolom 4: Brand & Ringkasan */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/assets/logo/yukii.png"
+                alt="Yukii Logo"
+                className="h-8 w-auto object-contain brightness-0 invert"
+              />
               <span className="text-xl font-black tracking-tight font-['Space_Grotesk'] text-white">
-                balioh<span className="text-blue-500">.</span>
+                Yukii<span className="text-blue-500">.</span>
               </span>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase">
                 INDONESIA
@@ -102,14 +107,14 @@ export function BaliohFooter() {
               Platform rental mobil terpercaya lepas kunci dan dengan sopir di Tangerang, Jabodetabek &amp; 250+ kota seluruh Indonesia.
             </p>
             <div className="pt-2 text-slate-500 text-[11px] font-mono">
-              &copy; 2026 balioh. All rights reserved.
+              &copy; 2026 Yukii.id &amp; PT DEO VATTA CORP. All rights reserved.
             </div>
           </div>
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-500 text-[11px] gap-2">
-          <span>Official Showcase &bull; Powered by Yukii Multi-Tenant Enterprise Engine</span>
-          <span className="font-mono text-slate-600">v2.4.0-balioh-core</span>
+          <span>Official Rental Showcase &bull; Powered by Yukii Multi-Tenant Enterprise Engine</span>
+          <span className="font-mono text-slate-600">v2.4.0-yukii-rental</span>
         </div>
       </div>
     </footer>

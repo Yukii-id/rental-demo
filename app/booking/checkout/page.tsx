@@ -200,7 +200,7 @@ function CheckoutContent() {
                     BAYAR LUNAS {formatRupiah(totalBiaya)}
                   </button>
                   <p className="text-[11px] text-slate-400 text-center mt-2.5">
-                    Dengan menekan tombol di atas, Anda menyetujui Syarat &amp; Ketentuan Sewa Balioh.
+                    Dengan menekan tombol di atas, Anda menyetujui Syarat &amp; Ketentuan Sewa Yukii.
                   </p>
                 </div>
               </form>
@@ -215,7 +215,7 @@ function CheckoutContent() {
                     PEMESANAN BERHASIL DIBUAT!
                   </h2>
                   <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-                    Terima kasih, <strong>{namaLengkap}</strong>. Jadwal rental unit <strong>{selectedCar.fullName}</strong> telah tercatat di sistem balioh. Kode reservasi dan kontak driver telah diteruskan ke nomor <strong>+62{noWa}</strong>.
+                    Terima kasih, <strong>{namaLengkap}</strong>. Jadwal rental unit <strong>{selectedCar.fullName}</strong> telah tercatat di sistem Yukii. Kode reservasi dan kontak driver telah diteruskan ke nomor <strong>+62{noWa}</strong>.
                   </p>
                 </div>
                 <div className="pt-3 flex flex-wrap justify-center gap-3">
