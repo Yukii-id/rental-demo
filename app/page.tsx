@@ -34,10 +34,11 @@ import {
 import { formatRupiah } from '@/lib/utils';
 
 export default function RentalLandingPage() {
-  // Filter state untuk Pencarian Mobil (inspirasi Balioh)
-  const [rentType, setRentType] = useState<'lepas_kunci' | 'dengan_sopir'>('lepas_kunci');
-  const [durationCycle, setDurationCycle] = useState<'harian' | 'bulanan'>('harian');
-  const [selectedLocation, setSelectedLocation] = useState(TANGERANG_LOCATIONS[0]);
+  // Filter state untuk Pencarian Mobil (persis Balioh)
+  const [rentType, setRentType] = useState<'dengan_sopir' | 'lepas_kunci'>('dengan_sopir');
+  const [selectedLocation, setSelectedLocation] = useState('Tangerang');
+  const [startDate, setStartDate] = useState('Jum, 16 Okt, 06:00');
+  const [duration, setDuration] = useState('1 Hari');
   const [categoryFilter, setCategoryFilter] = useState<string>('Semua');
 
   // Booking drawer / modal state (1-2 input pendek)
@@ -73,14 +74,14 @@ export default function RentalLandingPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white">
       {/* ── TOP BANNER DEMO SUITE ── */}
-      <div className="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+      <div className="bg-slate-950 text-white text-xs py-1.5 px-4 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
               DEMO SUITE
             </span>
             <span className="text-slate-300">
-              Master Paket: <strong>RENTAL_SERVICE</strong> (Website Rental Kendaraan & Sewa Barang)
+              Master Paket: <strong>RENTAL_SERVICE</strong> (Rental Kendaraan & Sewa Armada)
             </span>
           </div>
           <div className="flex items-center gap-4 text-slate-400">
@@ -97,203 +98,237 @@ export default function RentalLandingPage() {
         </div>
       </div>
 
-      {/* ── NAVBAR ── */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
+      {/* ── NAVBAR (Gaya Balioh Clean) ── */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-md shadow-blue-500/20">
-              <Car className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-lg font-bold tracking-tight text-slate-900">Yukii Rental</span>
-              <span className="text-[10px] block font-mono text-blue-600 -mt-1 font-semibold">
-                Tangerang & Soetta Hub
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center gap-1.5">
+              <span className="text-2xl font-black tracking-tight text-slate-950 font-['Space_Grotesk']">
+                balioh<span className="text-blue-600">.</span>
               </span>
-            </div>
-          </Link>
+              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider ml-1 bg-slate-100 px-1.5 py-0.5 rounded">
+                Tangerang
+              </span>
+            </Link>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-            <a href="#pencarian" className="hover:text-blue-600 transition-colors">Cari Mobil</a>
-            <a href="#armada" className="hover:text-blue-600 transition-colors">Pilihan Armada</a>
-            <a href="#layanan" className="hover:text-blue-600 transition-colors">Jenis Layanan</a>
-            <a href="#keunggulan" className="hover:text-blue-600 transition-colors">Kenapa Kami</a>
-            <a href="#lokasi" className="hover:text-blue-600 transition-colors">Titik Jemput</a>
-          </nav>
+            <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-700">
+              <a href="#armada" className="hover:text-blue-600 transition-colors">Mobil</a>
+              <a href="#armada" className="hover:text-blue-600 transition-colors">Motor</a>
+              <a href="#armada" className="hover:text-blue-600 transition-colors">Bus</a>
+              <a href="#armada" className="hover:text-blue-600 transition-colors flex items-center gap-1">
+                <span>Minibus</span>
+                <span className="text-xs text-slate-400">▾</span>
+              </a>
+              <a href="#armada" className="hover:text-blue-600 transition-colors flex items-center gap-1">
+                <span>Niaga</span>
+                <span className="text-xs text-slate-400">▾</span>
+              </a>
+              <a href="#layanan" className="hover:text-blue-600 transition-colors">Layanan</a>
+            </nav>
+          </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <a
-              href="https://wa.me/628111500099?text=Halo%20Yukii%20Rental,%20saya%20ingin%20tanya%20sewa%20mobil%20di%20Tangerang"
+              href="https://wa.me/628111500099?text=Halo%20Balioh%20Rental%20Tangerang,%20saya%20ingin%20tanya%20sewa%20mobil"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-all"
+              className="text-xs font-bold text-slate-700 hover:text-blue-600 transition-colors hidden sm:block"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>WhatsApp CS</span>
+              Masuk
+            </a>
+            <a
+              href="https://wa.me/628111500099?text=Halo%20Balioh%20Rental%20Tangerang,%20saya%20ingin%20daftar%20sewa%20mobil"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all"
+            >
+              Daftar
             </a>
           </div>
         </div>
       </header>
 
-      {/* ── HERO SECTION (Inspirasi Balioh Tangerang) ── */}
-      <section className="relative overflow-hidden pt-8 pb-16 lg:pt-14 lg:pb-24 bg-gradient-to-b from-blue-50/60 via-white to-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Kolom Kiri: Copywriting & USP */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/80 border border-blue-200 text-blue-800 text-xs font-medium">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>Rental Mobil Tangerang & Bandara Soekarno-Hatta</span>
+      {/* ── HERO SECTION (Identik Balioh: Navy Background + Center Title + Search Box + 3 Pillars) ── */}
+      <section className="relative bg-[#0b132b] text-white pt-8 pb-16 lg:pt-10 lg:pb-20 border-b border-slate-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          {/* Breadcrumb */}
+          <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+            <Link href="/" className="hover:text-slate-200 transition-colors">Home</Link>
+            <span>&gt;</span>
+            <a href="#armada" className="hover:text-slate-200 transition-colors">Sewa Mobil</a>
+            <span>&gt;</span>
+            <span className="text-slate-400">Banten</span>
+            <span>&gt;</span>
+            <span className="text-slate-200 font-medium">Sewa Mobil di Tangerang</span>
+          </div>
+
+          {/* Heading & Subtitle Center */}
+          <div className="text-center space-y-2 max-w-3xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white uppercase font-['Space_Grotesk']">
+              SEWA MOBIL DI TANGERANG
+            </h1>
+            <p className="text-sm sm:text-base text-slate-300 font-normal">
+              Rental mobil lepas kunci dan dengan supir di area Tangerang &amp; sekitarnya
+            </p>
+          </div>
+
+          {/* Horizontal Search Widget (Kartu Putih di Tengah) */}
+          <div className="bg-white rounded-2xl shadow-2xl p-5 sm:p-6 text-slate-900 max-w-5xl mx-auto">
+            {/* Tabs: Dengan Sopir vs Lepas Kunci */}
+            <div className="flex items-center gap-6 border-b border-slate-100 pb-3 mb-4">
+              <button
+                type="button"
+                onClick={() => setRentType('dengan_sopir')}
+                className={`text-sm font-bold pb-2 -mb-3 transition-colors relative ${
+                  rentType === 'dengan_sopir'
+                    ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
+                    : 'text-slate-400 hover:text-slate-600'
+                }`}
+              >
+                Dengan Sopir
+              </button>
+              <button
+                type="button"
+                onClick={() => setRentType('lepas_kunci')}
+                className={`text-sm font-bold pb-2 -mb-3 transition-colors relative ${
+                  rentType === 'lepas_kunci'
+                    ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
+                    : 'text-slate-400 hover:text-slate-600'
+                }`}
+              >
+                Lepas Kunci
+              </button>
+            </div>
+
+            {/* Form Fields Horizontal */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+              {/* Field 1: Lokasi */}
+              <div className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-slate-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
+                    Lokasi Rental
+                  </span>
+                  <select
+                    value={selectedLocation}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
+                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none truncate cursor-pointer"
+                  >
+                    <option value="Tangerang">Tangerang</option>
+                    <option value="Bandara Soekarno-Hatta">Bandara Soekarno-Hatta (Terminal 1, 2, 3)</option>
+                    <option value="BSD City & Serpong">BSD City &amp; Serpong</option>
+                    <option value="Gading Serpong">Gading Serpong</option>
+                    <option value="Karawaci">Karawaci &amp; Lippo Village</option>
+                    <option value="Alam Sutera">Alam Sutera &amp; Cipondoh</option>
+                    <option value="Balaraja">Balaraja &amp; Cikupa</option>
+                  </select>
+                </div>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Sewa Mobil di Tangerang Mulai{' '}
-                <span className="text-blue-600 underline decoration-blue-300 decoration-wavy decoration-2">
-                  Rp300.000/hari
-                </span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-                Rental mobil lepas kunci dan dengan supir profesional di seluruh area Tangerang, BSD City, Gading Serpong, Alam Sutera, hingga antar-jemput Terminal 1, 2, dan 3 Bandara Soekarno-Hatta.
-              </p>
-
-              {/* 3 Value Pillars (Balioh Tangerang) */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
-                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div className="flex items-center gap-2 text-blue-600 font-bold text-xs mb-1">
-                    <MapPin className="w-4 h-4" />
-                    <span>Jangkauan Luas</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    Bandara Soetta, Tangerang Kota, BSD City, Balaraja, Poris, Stasiun.
-                  </p>
+              {/* Field 2: Tanggal & Waktu Mulai */}
+              <div className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
+                <Calendar className="w-5 h-5 text-slate-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
+                    Tanggal &amp; Waktu Mulai
+                  </span>
+                  <input
+                    type="text"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none"
+                  />
                 </div>
+              </div>
 
-                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div className="flex items-center gap-2 text-emerald-600 font-bold text-xs mb-1">
-                    <ShieldCheck className="w-4 h-4" />
-                    <span>Transparansi Harga</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    Harga jujur dan kompetitif tanpa biaya siluman untuk semua armada.
-                  </p>
+              {/* Field 3: Durasi Sewa */}
+              <div className="md:col-span-3 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
+                <Clock className="w-5 h-5 text-slate-400 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
+                    Durasi Sewa
+                  </span>
+                  <select
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none cursor-pointer"
+                  >
+                    <option value="1 Hari">1 Hari (24 Jam)</option>
+                    <option value="2 Hari">2 Hari</option>
+                    <option value="3 Hari">3 Hari</option>
+                    <option value="7 Hari">7 Hari (Mingguan)</option>
+                    <option value="30 Hari">30 Hari (Bulanan)</option>
+                  </select>
                 </div>
+              </div>
 
-                <div className="p-3.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                  <div className="flex items-center gap-2 text-amber-600 font-bold text-xs mb-1">
-                    <Clock className="w-4 h-4" />
-                    <span>Bantuan 24/7</span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 leading-tight">
-                    Tim standby respons darurat derek dan booking penerbangan malam.
-                  </p>
-                </div>
+              {/* Tombol Search (Navy Button with Magnifying Glass) */}
+              <div className="md:col-span-1">
+                <a
+                  href="#armada"
+                  className="w-full h-11 rounded-xl bg-[#0b132b] hover:bg-blue-600 text-white flex items-center justify-center transition-colors shadow-md"
+                  title="Cari Mobil"
+                >
+                  <Search className="w-5 h-5" />
+                </a>
               </div>
             </div>
 
-            {/* Kolom Kanan: Card Panel Cari Mobil (Balioh Interactive Filter) */}
-            <div id="pencarian" className="lg:col-span-5">
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-5 sm:p-6 space-y-4">
-                <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
-                  <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2">
-                    <Search className="w-4 h-4 text-blue-600" />
-                    Cari & Booking Unit Rental
-                  </h3>
-                  <span className="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded font-semibold border border-emerald-200">
-                    Ready Stock
-                  </span>
-                </div>
+            {/* Info kecil di bawah input */}
+            <div className="mt-3 pt-2 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2 border-t border-slate-50">
+              <span>
+                Paket 12 Jam / 24 Jam: Dalam kota (termasuk BBM &amp; Driver) | Luar kota (fleksibel)
+              </span>
+              <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" /> Jaminan pembatalan gratis s/d 24 jam sebelum jadwal
+              </span>
+            </div>
+          </div>
 
-                {/* Switch Mode: Dengan Sopir vs Lepas Kunci */}
-                <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-xl text-xs font-semibold">
-                  <button
-                    type="button"
-                    onClick={() => setRentType('lepas_kunci')}
-                    className={`py-2 rounded-lg transition-all ${
-                      rentType === 'lepas_kunci'
-                        ? 'bg-white text-blue-600 shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Lepas Kunci
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRentType('dengan_sopir')}
-                    className={`py-2 rounded-lg transition-all ${
-                      rentType === 'dengan_sopir'
-                        ? 'bg-white text-blue-600 shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Dengan Supir
-                  </button>
-                </div>
+          {/* 3 Value Pillars di Bawah Search Widget */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6 max-w-5xl mx-auto">
+            {/* Pillar 1 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shrink-0">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-extrabold text-white text-xs uppercase tracking-wider">
+                  JANGKAUAN LUAS
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Bandara Soekarno-Hatta, Tangerang Kota, BSD City, Balaraja, Terminal Poris Plawad, Stasiun Tangerang
+                </p>
+              </div>
+            </div>
 
-                {/* Siklus Waktu: Harian vs Bulanan */}
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <button
-                    type="button"
-                    onClick={() => setDurationCycle('harian')}
-                    className={`px-3 py-1.5 rounded-lg border text-center transition-all ${
-                      durationCycle === 'harian'
-                        ? 'border-blue-600 bg-blue-50/50 text-blue-700 font-bold'
-                        : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                    }`}
-                  >
-                    📅 Sewa Harian
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setDurationCycle('bulanan')}
-                    className={`px-3 py-1.5 rounded-lg border text-center transition-all ${
-                      durationCycle === 'bulanan'
-                        ? 'border-blue-600 bg-blue-50/50 text-blue-700 font-bold'
-                        : 'border-slate-200 text-slate-600 hover:border-slate-300'
-                    }`}
-                  >
-                    🏢 Paket Bulanan (Hemat 40%)
-                  </button>
-                </div>
+            {/* Pillar 2 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-extrabold text-white text-xs uppercase tracking-wider">
+                  TRANSPARANSI HARGA
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Harga jujur dan kompetitif tanpa biaya tersembunyi untuk semua jenis armada.
+                </p>
+              </div>
+            </div>
 
-                {/* Pilih Lokasi Pengantaran / Penjemputan */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                    Titik Antar / Jemput Unit
-                  </label>
-                  <div className="relative">
-                    <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                    <select
-                      value={selectedLocation}
-                      onChange={(e) => setSelectedLocation(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800"
-                    >
-                      {TANGERANG_LOCATIONS.map((loc) => (
-                        <option key={loc} value={loc}>
-                          {loc}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Info Ringkas Sesuai Pilihan */}
-                <div className="p-3 rounded-xl bg-blue-50/70 border border-blue-200/60 text-xs text-blue-900 space-y-1">
-                  <div className="flex justify-between font-bold">
-                    <span>Opsi: {rentType === 'lepas_kunci' ? 'Lepas Kunci (Self Drive)' : 'Dengan Supir Resmi'}</span>
-                    <span>Durasi: {durationCycle === 'harian' ? 'Harian' : 'Bulanan'}</span>
-                  </div>
-                  <p className="text-[11px] text-blue-700">
-                    Pengantaran langsung ke: <strong>{selectedLocation}</strong>
-                  </p>
-                </div>
-
-                <a
-                  href="#armada"
-                  className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-1.5"
-                >
-                  <span>Lihat Mobil yang Tersedia</span>
-                  <ChevronRight className="w-4 h-4" />
-                </a>
+            {/* Pillar 3 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-400/20 flex items-center justify-center text-blue-400 shrink-0">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-extrabold text-white text-xs uppercase tracking-wider">
+                  BANTUAN 24/7
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Tim support kami siap membantu kebutuhan perjalanan dan darurat Anda kapan saja.
+                </p>
               </div>
             </div>
           </div>
@@ -340,7 +375,7 @@ export default function RentalLandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredCars.map((car) => {
               const activePrice =
-                durationCycle === 'bulanan' && car.pricePerMonth
+                duration === '30 Hari' && car.pricePerMonth
                   ? car.pricePerMonth
                   : rentType === 'dengan_sopir' && car.withDriverPrice
                   ? car.withDriverPrice
@@ -411,7 +446,7 @@ export default function RentalLandingPage() {
                     <div className="pt-3 border-t border-slate-100 flex items-baseline justify-between mb-3">
                       <div>
                         <span className="text-[10px] text-slate-400 block font-medium">
-                          {durationCycle === 'bulanan'
+                          {duration === '30 Hari'
                             ? 'Tarif Bulanan'
                             : rentType === 'dengan_sopir'
                             ? 'Dengan Supir / 24 Jam'
@@ -422,7 +457,7 @@ export default function RentalLandingPage() {
                         </span>
                       </div>
                       <span className="text-[10px] text-slate-400">
-                        {durationCycle === 'bulanan' ? '/bln' : '/hari'}
+                        {duration === '30 Hari' ? '/bln' : '/hari'}
                       </span>
                     </div>
 
