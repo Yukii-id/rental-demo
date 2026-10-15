@@ -1,20 +1,125 @@
 export interface CarItem {
   id: string;
   name: string;
-  brand: string;
-  category: 'MPV' | 'SUV' | 'Sedan' | 'City Car' | 'Luxury' | 'Minibus';
+  fullName: string;
+  category: 'MPV' | 'CITY' | 'SUV' | 'MEWAH' | 'EV';
+  yearRange: string;
   seats: number;
-  transmission: 'Automatic' | 'Manual';
-  fuel: 'Bensin' | 'Diesel' | 'Hybrid';
-  year: string;
+  luggage: number;
+  transmission: 'AT/MT' | 'AT' | 'MT';
   pricePerDay: number;
-  pricePerMonth?: number;
   withDriverPrice?: number;
+  pricePerMonth?: number;
   image: string;
-  badge?: string;
-  available: boolean;
-  features: string[];
+  isPopular?: boolean;
 }
+
+export const BALIOH_CARS: CarItem[] = [
+  {
+    id: 'grand-new-avanza',
+    name: 'Grand New Avanza',
+    fullName: 'TOYOTA GRAND NEW AVANZA',
+    category: 'MPV',
+    yearRange: '2015-2021',
+    seats: 7,
+    luggage: 2,
+    transmission: 'AT/MT',
+    pricePerDay: 400000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-All-New-Avanza.png.webp',
+    isPopular: true,
+  },
+  {
+    id: 'all-new-veloz',
+    name: 'All New Veloz',
+    fullName: 'TOYOTA ALL NEW VELOZ',
+    category: 'MPV',
+    yearRange: '2022-2026',
+    seats: 7,
+    luggage: 2,
+    transmission: 'AT',
+    pricePerDay: 500000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-All-New-Avanza.png.webp',
+    isPopular: true,
+  },
+  {
+    id: 'innova-zenix-hybrid',
+    name: 'Innova Zenix G Hybrid',
+    fullName: 'TOYOTA INNOVA ZENIX G HYBRID',
+    category: 'MPV',
+    yearRange: '2022-2026',
+    seats: 7,
+    luggage: 4,
+    transmission: 'AT',
+    pricePerDay: 750000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Innova-Zenix-1.png.webp',
+    isPopular: true,
+  },
+  {
+    id: 'innova-reborn-facelift',
+    name: 'Innova Reborn Facelift',
+    fullName: 'TOYOTA INNOVA REBORN FACELIFT',
+    category: 'MPV',
+    yearRange: '2017-2019',
+    seats: 7,
+    luggage: 4,
+    transmission: 'AT/MT',
+    pricePerDay: 550000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-All-New-Avanza.png.webp',
+    isPopular: true,
+  },
+  {
+    id: 'new-agya',
+    name: 'New Agya GR Sport',
+    fullName: 'TOYOTA NEW AGYA GR SPORT',
+    category: 'CITY',
+    yearRange: '2023-2026',
+    seats: 5,
+    luggage: 2,
+    transmission: 'AT/MT',
+    pricePerDay: 350000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Camry.png.webp',
+    isPopular: true,
+  },
+  {
+    id: 'fortuner-gr-sport',
+    name: 'Fortuner GR Sport',
+    fullName: 'TOYOTA FORTUNER GR SPORT',
+    category: 'SUV',
+    yearRange: '2022-2026',
+    seats: 7,
+    luggage: 4,
+    transmission: 'AT',
+    pricePerDay: 1100000,
+    image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
+    isPopular: false,
+  },
+  {
+    id: 'alphard-facelift',
+    name: 'Alphard Transformer',
+    fullName: 'TOYOTA ALPHARD FACELIFT',
+    category: 'MEWAH',
+    yearRange: '2021-2024',
+    seats: 7,
+    luggage: 4,
+    transmission: 'AT',
+    pricePerDay: 2300000,
+    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Alphard-1.png.webp',
+    isPopular: false,
+  },
+  {
+    id: 'ioniq-5-ev',
+    name: 'Hyundai Ioniq 5 EV',
+    fullName: 'HYUNDAI IONIQ 5 SIGNATURE',
+    category: 'EV',
+    yearRange: '2023-2025',
+    seats: 5,
+    luggage: 3,
+    transmission: 'AT',
+    pricePerDay: 1400000,
+    image: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=800&q=80',
+    isPopular: false,
+  },
+];
 
 export interface ServiceItem {
   id: string;
@@ -26,145 +131,6 @@ export interface ServiceItem {
   badge?: string;
   actionText: string;
 }
-
-export const CARS_DATA: CarItem[] = [
-  {
-    id: 'avanza-fwd',
-    name: 'Toyota All New Avanza',
-    brand: 'Toyota',
-    category: 'MPV',
-    seats: 7,
-    transmission: 'Automatic',
-    fuel: 'Bensin',
-    year: '2023 - 2024',
-    pricePerDay: 350000,
-    withDriverPrice: 550000,
-    pricePerMonth: 6500000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-All-New-Avanza.png.webp',
-    badge: 'Terfavorit Keluarga',
-    available: true,
-    features: ['AC Double Blower', 'Audio Bluetooth', 'Airbags', 'Kamera Parkir', 'Irit BBM'],
-  },
-  {
-    id: 'zenix-hybrid',
-    name: 'Toyota Innova Zenix Hybrid',
-    brand: 'Toyota',
-    category: 'MPV',
-    seats: 7,
-    transmission: 'Automatic',
-    fuel: 'Hybrid',
-    year: '2024',
-    pricePerDay: 750000,
-    withDriverPrice: 950000,
-    pricePerMonth: 14500000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/innova-zenix.png',
-    badge: 'Paling Nyaman',
-    available: true,
-    features: ['Captain Seat', 'Sunroof Panoramic', 'TSS 3.0 Safety', 'Wireless Charger', 'Suspensi Halus'],
-  },
-  {
-    id: 'innova-reborn',
-    name: 'Toyota Innova Reborn Diesel',
-    brand: 'Toyota',
-    category: 'MPV',
-    seats: 7,
-    transmission: 'Automatic',
-    fuel: 'Diesel',
-    year: '2022 - 2023',
-    pricePerDay: 550000,
-    withDriverPrice: 750000,
-    pricePerMonth: 10500000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Innova-Zenix-1.png.webp',
-    badge: 'Tangguh Luar Kota',
-    available: true,
-    features: ['Mesin Diesel 2GD Bertenaga', 'Kabin Kedap', 'AC Dingin Merata', 'Bagasi Luas'],
-  },
-  {
-    id: 'fortuner-gr',
-    name: 'Toyota Fortuner GR Sport',
-    brand: 'Toyota',
-    category: 'SUV',
-    seats: 7,
-    transmission: 'Automatic',
-    fuel: 'Diesel',
-    year: '2024',
-    pricePerDay: 1100000,
-    withDriverPrice: 1350000,
-    pricePerMonth: 21000000,
-    image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80',
-    badge: 'Gagah & Prestisius',
-    available: true,
-    features: ['4x2 High Ground Clearance', 'Leather Interior', 'Power Backdoor', 'Tampilan Maskulin'],
-  },
-  {
-    id: 'alphard-transformer',
-    name: 'Toyota Alphard Facelift',
-    brand: 'Toyota',
-    category: 'Luxury',
-    seats: 7,
-    transmission: 'Automatic',
-    fuel: 'Bensin',
-    year: '2023 - 2024',
-    pricePerDay: 2300000,
-    withDriverPrice: 2600000,
-    pricePerMonth: 45000000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Alphard-1.png.webp',
-    badge: 'VIP & Pengantin',
-    available: true,
-    features: ['Executive Ottoman Seat', 'Pilot Seat Massage', 'Dual Sunroof', 'Privasi Maksimal'],
-  },
-  {
-    id: 'hiace-premio',
-    name: 'Toyota Hiace Premio Luxury',
-    brand: 'Toyota',
-    category: 'Minibus',
-    seats: 12,
-    transmission: 'Manual',
-    fuel: 'Diesel',
-    year: '2023',
-    pricePerDay: 1300000,
-    withDriverPrice: 1550000,
-    pricePerMonth: 25000000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Hiace-Premio.png.webp',
-    badge: 'Rombongan & Wisata',
-    available: true,
-    features: ['Reclining Seat Jumbo', 'Charger Port Tiap Baris', 'Audio Karaoke', 'Suspensi Empuk'],
-  },
-  {
-    id: 'camry-hybrid',
-    name: 'Toyota Camry 2.5 Hybrid',
-    brand: 'Toyota',
-    category: 'Sedan',
-    seats: 5,
-    transmission: 'Automatic',
-    fuel: 'Hybrid',
-    year: '2023',
-    pricePerDay: 1500000,
-    withDriverPrice: 1800000,
-    pricePerMonth: 28000000,
-    image: 'https://goaja.co.id/wp-content/uploads/2024/12/Toyota-Camry.png.webp',
-    badge: 'Eksekutif & Bisnis',
-    available: true,
-    features: ['JBL Premium Audio', 'Rear Seat Reclining Control', 'Suspensi Lembut', 'Irit Hybrid'],
-  },
-  {
-    id: 'brio-rs',
-    name: 'Honda Brio RS Urbanite',
-    brand: 'Honda',
-    category: 'City Car',
-    seats: 5,
-    transmission: 'Automatic',
-    fuel: 'Bensin',
-    year: '2023',
-    pricePerDay: 300000,
-    withDriverPrice: 480000,
-    pricePerMonth: 5500000,
-    image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80',
-    badge: 'Lincah Dalam Kota',
-    available: true,
-    features: ['Mudah Parkir', 'Sangat Irit BBM', 'Touchscreen Headunit', 'Handling Ringan'],
-  },
-];
 
 export const SERVICES_DATA: ServiceItem[] = [
   {

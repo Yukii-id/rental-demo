@@ -11,6 +11,7 @@ import {
   Users,
   Fuel,
   Settings2,
+  ChevronLeft,
   ChevronRight,
   PhoneCall,
   CheckCircle2,
@@ -26,7 +27,7 @@ import {
   Search,
 } from 'lucide-react';
 import {
-  CARS_DATA,
+  BALIOH_CARS,
   SERVICES_DATA,
   TANGERANG_LOCATIONS,
   CarItem,
@@ -113,7 +114,7 @@ export default function RentalLandingPage() {
   const [startDateStr, setStartDateStr] = useState('Jum, 16 Okt, 08:00');
   const [endDateStr, setEndDateStr] = useState('Min, 18 Okt, 08:00');
   const [durationDays, setDurationDays] = useState(2);
-  const [categoryFilter, setCategoryFilter] = useState<string>('Semua');
+  const [categoryFilter, setCategoryFilter] = useState<string>('POPULAR');
 
   // Location dropdown popover state
   const [isLocationOpen, setIsLocationOpen] = useState(false);
@@ -135,13 +136,13 @@ export default function RentalLandingPage() {
     loc.subtext.toLowerCase().includes(locationSearch.toLowerCase())
   );
 
-  // Filter cars berdasarkan kategori
-  const filteredCars = CARS_DATA.filter((car) => {
-    if (categoryFilter === 'Semua') return true;
+  // Filter cars berdasarkan kategori Balioh
+  const filteredCars = BALIOH_CARS.filter((car) => {
+    if (categoryFilter === 'POPULAR') return car.isPopular;
     return car.category === categoryFilter;
   });
 
-  const categories = ['Semua', 'MPV', 'SUV', 'City Car', 'Luxury', 'Minibus'];
+  const categories = ['POPULAR', 'MPV', 'CITY', 'SUV', 'MEWAH', 'EV'];
 
   const serviceIcons: Record<string, React.ReactNode> = {
     UserCheck: <UserCheck className="w-6 h-6 text-blue-600" />,
@@ -544,148 +545,147 @@ export default function RentalLandingPage() {
         </div>
       </section>
 
-      {/* ── SECTION PILIHAN MOBIL (Inspirasi Balioh Tangerang) ── */}
-      <section id="armada" className="py-14 sm:py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 text-blue-600 text-xs font-bold uppercase tracking-wider mb-1">
-                <Car className="w-4 h-4" />
-                Tipe Kendaraan & Pilihan Mobil
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Pilihan Mobil Rental di Tangerang
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                Armada tahun muda terawat, bersih wangi, servis berkala di bengkel resmi.
-              </p>
-            </div>
-
-            {/* Filter Tabs Kategori Mobil */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs">
-              {categories.map((cat) => (
+      {/* ── SECTION PILIHAN MOBIL (100% Identik Balioh: TIPE KENDARAAN) ── */}
+      <section id="armada" className="py-12 sm:py-16 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Header Section: TIPE KENDARAAN (Kiri) & Navigasi Slider + Lihat Semua (Kanan) */}
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-950 uppercase tracking-tight font-['Space_Grotesk']">
+              TIPE KENDARAAN
+            </h2>
+            <div className="flex items-center gap-3">
+              {/* Panah Navigasi Carousel Slider */}
+              <div className="flex items-center gap-1.5">
                 <button
-                  key={cat}
                   type="button"
-                  onClick={() => setCategoryFilter(cat)}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
-                    categoryFilter === cat
-                      ? 'bg-white text-blue-600 shadow-2xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
+                  onClick={() => {
+                    const el = document.getElementById('cars-slider');
+                    if (el) el.scrollBy({ left: -260, behavior: 'smooth' });
+                  }}
+                  className="w-7 h-7 rounded-full border border-slate-200 hover:border-slate-400 bg-white flex items-center justify-center text-slate-600 hover:text-slate-900 transition-colors cursor-pointer shadow-2xs"
+                  aria-label="Previous cars"
                 >
-                  {cat}
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('cars-slider');
+                    if (el) el.scrollBy({ left: 260, behavior: 'smooth' });
+                  }}
+                  className="w-7 h-7 rounded-full border border-slate-200 hover:border-slate-400 bg-white flex items-center justify-center text-slate-600 hover:text-slate-900 transition-colors cursor-pointer shadow-2xs"
+                  aria-label="Next cars"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setCategoryFilter('MPV')}
+                className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
+              >
+                Lihat Semua
+              </button>
             </div>
           </div>
 
-          {/* Grid Kartu Mobil */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredCars.map((car) => {
-              const activePrice =
-                durationDays >= 30 && car.pricePerMonth
-                  ? car.pricePerMonth
-                  : rentType === 'dengan_sopir' && car.withDriverPrice
-                  ? car.withDriverPrice
-                  : car.pricePerDay;
+          {/* Filter Pill Tabs: POPULAR, MPV, CITY, SUV, MEWAH, EV */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setCategoryFilter(cat)}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all cursor-pointer shrink-0 ${
+                  categoryFilter === cat
+                    ? 'bg-[#0b132b] text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
 
-              return (
-                <div
-                  key={car.id}
-                  className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-2xs hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between group"
-                >
-                  <div>
-                    {/* Gambar Mobil */}
-                    <div className="relative h-44 bg-slate-50 overflow-hidden flex items-center justify-center p-3">
-                      <img
-                        src={car.image}
-                        alt={car.name}
-                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                      />
-                      {car.badge && (
-                        <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-900/80 text-white backdrop-blur-xs">
-                          {car.badge}
-                        </span>
-                      )}
-                      <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/90 text-blue-700 shadow-2xs border border-slate-200">
-                        {car.category}
+          {/* Horizontal Slider / Scrollable Card List Balioh */}
+          <div
+            id="cars-slider"
+            className="flex gap-4 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth"
+          >
+            {filteredCars.map((car) => (
+              <div
+                key={car.id}
+                className="w-[236px] shrink-0 rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div>
+                  {/* Area Atas: Kategori, Nama Lengkap, dan Badge Tahun Model */}
+                  <div className="space-y-0.5 mb-2">
+                    <span className="text-[11px] font-black uppercase text-slate-950 tracking-wider block">
+                      {car.category}
+                    </span>
+                    <h3 className="text-[11px] font-semibold text-slate-500 uppercase tracking-tight truncate">
+                      {car.fullName}
+                    </h3>
+                    <div className="pt-0.5">
+                      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#0b132b] text-white">
+                        {car.yearRange}
                       </span>
-                    </div>
-
-                    {/* Informasi Mobil */}
-                    <div className="p-4 space-y-3">
-                      <div>
-                        <h3 className="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition-colors">
-                          {car.name}
-                        </h3>
-                        <p className="text-[11px] text-slate-400">Tahun {car.year}</p>
-                      </div>
-
-                      {/* Spesifikasi Ikon */}
-                      <div className="grid grid-cols-3 gap-2 py-2 border-y border-slate-100 text-[11px] text-slate-600">
-                        <div className="flex items-center gap-1">
-                          <Users className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{car.seats} Kursi</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Settings2 className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{car.transmission}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Fuel className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{car.fuel}</span>
-                        </div>
-                      </div>
-
-                      {/* Fitur Utama */}
-                      <ul className="space-y-1">
-                        {car.features.slice(0, 3).map((feat, i) => (
-                          <li key={i} className="flex items-center gap-1.5 text-[11px] text-slate-500">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
-                            <span className="truncate">{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
                     </div>
                   </div>
 
-                  {/* Pricing & Tombol Booking */}
-                  <div className="p-4 pt-0">
-                    <div className="pt-3 border-t border-slate-100 flex items-baseline justify-between mb-3">
-                      <div>
-                        <span className="text-[10px] text-slate-400 block font-medium">
-                          {durationDays >= 30
-                            ? 'Tarif Bulanan'
-                            : rentType === 'dengan_sopir'
-                            ? 'Dengan Supir / 24 Jam'
-                            : 'Lepas Kunci / 24 Jam'}
-                        </span>
-                        <span className="text-base font-extrabold text-blue-600">
-                          {formatRupiah(activePrice)}
-                        </span>
-                      </div>
-                      <span className="text-[10px] text-slate-400">
-                        {durationDays >= 30 ? '/bln' : '/hari'}
-                      </span>
-                    </div>
+                  {/* Foto Mobil Balioh dengan Lingkaran Aksen Halus */}
+                  <div className="relative h-28 w-full flex items-center justify-center p-2 my-1">
+                    <div className="absolute w-20 h-20 rounded-full bg-slate-100 -z-0" />
+                    <img
+                      src={car.image}
+                      alt={car.name}
+                      className="max-h-full max-w-full object-contain relative z-10"
+                    />
+                  </div>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedCar(car);
-                        setBookingDays(durationDays);
-                        setBookingSuccess(false);
-                      }}
-                      className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <span>Booking Unit Ini</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                  {/* Spesifikasi: 3 Kolom Ikon Balioh (Orang, Bagasi, Transmisi) */}
+                  <div className="grid grid-cols-3 gap-0.5 py-2 my-2 border-y border-slate-100 text-[10px] text-slate-600 font-medium">
+                    <div className="flex items-center gap-1 justify-center">
+                      <Users className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <span>{car.seats}</span>
+                    </div>
+                    <div className="flex items-center gap-1 justify-center border-x border-slate-100 px-0.5">
+                      <span className="text-slate-400 font-bold text-xs">🧳</span>
+                      <span>{car.luggage}</span>
+                    </div>
+                    <div className="flex items-center gap-1 justify-center px-0.5 min-w-0">
+                      <Settings2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <span className="truncate">{car.transmission}</span>
+                    </div>
+                  </div>
+
+                  {/* Harga Balioh: Mulai dari IDR ... /hari */}
+                  <div className="py-1 text-[11px] text-slate-800">
+                    <span className="text-slate-500 block text-[10px]">Mulai dari </span>
+                    <strong className="text-slate-950 font-extrabold text-sm block">
+                      IDR {car.pricePerDay.toLocaleString('id-ID')}
+                    </strong>
+                    <span className="text-slate-500 text-[10px]">/hari</span>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Tombol Book Now Full-Width Dark Navy */}
+                <div className="pt-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCar(car);
+                      setBookingDays(durationDays);
+                      setBookingSuccess(false);
+                    }}
+                    className="w-full py-2.5 rounded-xl bg-[#0b132b] hover:bg-blue-600 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -881,11 +881,7 @@ export default function RentalLandingPage() {
                   <div>
                     <span className="text-[10px] text-slate-400 block">Tarif Estimasi</span>
                     <span className="font-bold text-blue-600 text-sm">
-                      {formatRupiah(
-                        (rentType === 'dengan_sopir' && selectedCar.withDriverPrice
-                          ? selectedCar.withDriverPrice
-                          : selectedCar.pricePerDay) * bookingDays
-                      )}
+                      {formatRupiah(selectedCar.pricePerDay * bookingDays)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
