@@ -33,13 +33,82 @@ import {
 } from '@/lib/rental-data';
 import { formatRupiah } from '@/lib/utils';
 
+interface LocationItem {
+  id: string;
+  name: string;
+  subtext: string;
+  icon: 'plane' | 'pin';
+}
+
+const TANGERANG_DROPDOWN_LOCATIONS: LocationItem[] = [
+  {
+    id: 'soetta',
+    name: 'Bandara Soekarno-Hatta',
+    subtext: 'Bandara di Tangerang, Banten, Indonesia',
+    icon: 'plane',
+  },
+  {
+    id: 'tangerang-kota',
+    name: 'Tangerang Kota',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'bsd-city',
+    name: 'BSD City',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'balaraja',
+    name: 'Balaraja',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'gading-serpong',
+    name: 'Gading Serpong',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'karawaci',
+    name: 'Karawaci',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'alam-sutera',
+    name: 'Alam Sutera',
+    subtext: 'Area di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'poris',
+    name: 'Terminal Poris Plawad',
+    subtext: 'Terminal di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+  {
+    id: 'stasiun-tng',
+    name: 'Stasiun Tangerang',
+    subtext: 'Stasiun Kereta di Tangerang, Banten, Indonesia',
+    icon: 'pin',
+  },
+];
+
 export default function RentalLandingPage() {
   // Filter state untuk Pencarian Mobil (persis Balioh)
-  const [rentType, setRentType] = useState<'dengan_sopir' | 'lepas_kunci'>('dengan_sopir');
-  const [selectedLocation, setSelectedLocation] = useState('Tangerang');
+  const [rentType, setRentType] = useState<'dengan_sopir' | 'lepas_kunci'>('lepas_kunci');
+  const [durationMode, setDurationMode] = useState<'harian' | 'bulanan' | 'tahunan'>('harian');
+  const [selectedLocation, setSelectedLocation] = useState('Tangerang Kota');
   const [startDate, setStartDate] = useState('Jum, 16 Okt, 06:00');
-  const [duration, setDuration] = useState('1 Hari');
+  const [duration, setDuration] = useState('2 Hari');
   const [categoryFilter, setCategoryFilter] = useState<string>('Semua');
+
+  // Location dropdown popover state
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [locationSearch, setLocationSearch] = useState('');
 
   // Booking drawer / modal state (1-2 input pendek)
   const [selectedCar, setSelectedCar] = useState<CarItem | null>(null);
@@ -47,6 +116,12 @@ export default function RentalLandingPage() {
   const [customerName, setCustomerName] = useState('');
   const [customerWa, setCustomerWa] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  // Filter lokasi di dropdown
+  const filteredLocations = TANGERANG_DROPDOWN_LOCATIONS.filter((loc) =>
+    loc.name.toLowerCase().includes(locationSearch.toLowerCase()) ||
+    loc.subtext.toLowerCase().includes(locationSearch.toLowerCase())
+  );
 
   // Filter cars berdasarkan kategori
   const filteredCars = CARS_DATA.filter((car) => {
@@ -173,56 +248,163 @@ export default function RentalLandingPage() {
           </div>
 
           {/* Horizontal Search Widget (Kartu Putih di Tengah) */}
-          <div className="bg-white rounded-2xl shadow-2xl p-5 sm:p-6 text-slate-900 max-w-5xl mx-auto">
-            {/* Tabs: Dengan Sopir vs Lepas Kunci */}
-            <div className="flex items-center gap-6 border-b border-slate-100 pb-3 mb-4">
-              <button
-                type="button"
-                onClick={() => setRentType('dengan_sopir')}
-                className={`text-sm font-bold pb-2 -mb-3 transition-colors relative ${
-                  rentType === 'dengan_sopir'
-                    ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
-                    : 'text-slate-400 hover:text-slate-600'
-                }`}
-              >
-                Dengan Sopir
-              </button>
-              <button
-                type="button"
-                onClick={() => setRentType('lepas_kunci')}
-                className={`text-sm font-bold pb-2 -mb-3 transition-colors relative ${
-                  rentType === 'lepas_kunci'
-                    ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
-                    : 'text-slate-400 hover:text-slate-600'
-                }`}
-              >
-                Lepas Kunci
-              </button>
+          <div className="bg-white rounded-2xl shadow-2xl p-5 sm:p-6 text-slate-900 max-w-5xl mx-auto relative z-30">
+            {/* Row 1: Tabs: Dengan Sopir vs Lepas Kunci */}
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+              <div className="flex items-center gap-6">
+                <button
+                  type="button"
+                  onClick={() => setRentType('dengan_sopir')}
+                  className={`text-sm font-bold pb-2 -mb-3 transition-colors relative cursor-pointer ${
+                    rentType === 'dengan_sopir'
+                      ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
+                      : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  Dengan Sopir
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRentType('lepas_kunci')}
+                  className={`text-sm font-bold pb-2 -mb-3 transition-colors relative cursor-pointer ${
+                    rentType === 'lepas_kunci'
+                      ? 'text-slate-950 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-slate-950'
+                      : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  Lepas Kunci
+                </button>
+              </div>
+
+              {/* Pill Sub-Tabs: Harian, Bulanan, Tahunan (persis Balioh) */}
+              <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setDurationMode('harian')}
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                    durationMode === 'harian'
+                      ? 'bg-[#0b132b] text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Harian
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDurationMode('bulanan')}
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                    durationMode === 'bulanan'
+                      ? 'bg-[#0b132b] text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Bulanan
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDurationMode('tahunan')}
+                  className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                    durationMode === 'tahunan'
+                      ? 'bg-[#0b132b] text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Tahunan
+                </button>
+              </div>
             </div>
 
             {/* Form Fields Horizontal */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
-              {/* Field 1: Lokasi */}
-              <div className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-slate-400 shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
-                    Lokasi Rental
-                  </span>
-                  <select
-                    value={selectedLocation}
-                    onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none truncate cursor-pointer"
-                  >
-                    <option value="Tangerang">Tangerang</option>
-                    <option value="Bandara Soekarno-Hatta">Bandara Soekarno-Hatta (Terminal 1, 2, 3)</option>
-                    <option value="BSD City & Serpong">BSD City &amp; Serpong</option>
-                    <option value="Gading Serpong">Gading Serpong</option>
-                    <option value="Karawaci">Karawaci &amp; Lippo Village</option>
-                    <option value="Alam Sutera">Alam Sutera &amp; Cipondoh</option>
-                    <option value="Balaraja">Balaraja &amp; Cikupa</option>
-                  </select>
+              {/* Field 1: Lokasi dengan Popover Dropdown Balioh */}
+              <div className="md:col-span-4 relative">
+                <div
+                  onClick={() => setIsLocationOpen(!isLocationOpen)}
+                  className="bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3 cursor-pointer select-none"
+                >
+                  <MapPin className="w-5 h-5 text-slate-400 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
+                      Lokasi Rental
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 block truncate">
+                      {selectedLocation}
+                    </span>
+                  </div>
+                  <span className="text-xs text-slate-400">▾</span>
                 </div>
+
+                {/* Popover Dropdown Balioh */}
+                {isLocationOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-40"
+                      onClick={() => setIsLocationOpen(false)}
+                    />
+                    <div className="absolute left-0 top-full mt-2 w-80 sm:w-96 bg-white rounded-xl border border-slate-200 shadow-2xl z-50 p-3 space-y-3">
+                      {/* Search Input di dalam Dropdown */}
+                      <div className="relative">
+                        <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+                        <input
+                          type="text"
+                          placeholder="Ketik lokasi..."
+                          value={locationSearch}
+                          onChange={(e) => setLocationSearch(e.target.value)}
+                          autoFocus
+                          className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500 bg-slate-50 text-slate-800"
+                        />
+                      </div>
+
+                      {/* Header Kategori */}
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-1 mb-1">
+                          LOKASI DI TANGERANG
+                        </span>
+
+                        {/* List Items */}
+                        <div className="max-h-60 overflow-y-auto space-y-1 pr-1">
+                          {filteredLocations.map((loc) => (
+                            <button
+                              key={loc.id}
+                              type="button"
+                              onClick={() => {
+                                setSelectedLocation(loc.name);
+                                setIsLocationOpen(false);
+                                setLocationSearch('');
+                              }}
+                              className={`w-full text-left p-2 rounded-lg flex items-start gap-2.5 transition-colors cursor-pointer ${
+                                selectedLocation === loc.name
+                                  ? 'bg-blue-50/80 text-blue-900'
+                                  : 'hover:bg-slate-50 text-slate-800'
+                              }`}
+                            >
+                              <div className="w-6 h-6 rounded-md bg-slate-100 flex items-center justify-center text-slate-500 shrink-0 mt-0.5">
+                                {loc.icon === 'plane' ? (
+                                  <Plane className="w-3.5 h-3.5 text-blue-600" />
+                                ) : (
+                                  <MapPin className="w-3.5 h-3.5 text-slate-500" />
+                                )}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <span className="text-xs font-bold block leading-tight">
+                                  {loc.name}
+                                </span>
+                                <span className="text-[11px] text-slate-400 block truncate">
+                                  {loc.subtext}
+                                </span>
+                              </div>
+                            </button>
+                          ))}
+                          {filteredLocations.length === 0 && (
+                            <div className="text-center py-4 text-xs text-slate-400">
+                              Lokasi tidak ditemukan
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Field 2: Tanggal & Waktu Mulai */}
