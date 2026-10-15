@@ -1,0 +1,13 @@
+services:
+  rental-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yukii-rental-demo
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3080:3080"
+    environment:
+      - PORT=3080
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
