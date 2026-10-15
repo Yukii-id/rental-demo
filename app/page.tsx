@@ -32,6 +32,14 @@ import {
   CarItem,
 } from '@/lib/rental-data';
 import { formatRupiah } from '@/lib/utils';
+import { RentalDateTimeModal } from '@/components/RentalDateTimeModal';
+
+const MONTH_NAMES_SHORT = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+  'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'
+];
+
+const DAY_NAMES_SHORT = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 
 interface LocationItem {
   id: string;
@@ -102,13 +110,17 @@ export default function RentalLandingPage() {
   const [rentType, setRentType] = useState<'dengan_sopir' | 'lepas_kunci'>('lepas_kunci');
   const [durationMode, setDurationMode] = useState<'harian' | 'bulanan' | 'tahunan'>('harian');
   const [selectedLocation, setSelectedLocation] = useState('Tangerang Kota');
-  const [startDate, setStartDate] = useState('Jum, 16 Okt, 06:00');
-  const [duration, setDuration] = useState('2 Hari');
+  const [startDateStr, setStartDateStr] = useState('Jum, 16 Okt, 08:00');
+  const [endDateStr, setEndDateStr] = useState('Min, 18 Okt, 08:00');
+  const [durationDays, setDurationDays] = useState(2);
   const [categoryFilter, setCategoryFilter] = useState<string>('Semua');
 
   // Location dropdown popover state
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [locationSearch, setLocationSearch] = useState('');
+
+  // Range Calendar 21st.dev + 30-min time modal state
+  const [isDateTimeModalOpen, setIsDateTimeModalOpen] = useState(false);
 
   // Booking drawer / modal state (1-2 input pendek)
   const [selectedCar, setSelectedCar] = useState<CarItem | null>(null);
@@ -407,41 +419,40 @@ export default function RentalLandingPage() {
                 )}
               </div>
 
-              {/* Field 2: Tanggal & Waktu Mulai */}
-              <div className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
+              {/* Field 2: Tanggal & Waktu Mulai (Trigger Modal Range Calendar 21st.dev) */}
+              <div
+                onClick={() => setIsDateTimeModalOpen(true)}
+                className="md:col-span-4 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3 cursor-pointer select-none"
+              >
                 <Calendar className="w-5 h-5 text-slate-400 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
                     Tanggal &amp; Waktu Mulai
                   </span>
-                  <input
-                    type="text"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none"
-                  />
+                  <span className="w-full text-xs font-bold text-slate-900 block truncate">
+                    {startDateStr}
+                  </span>
                 </div>
+                <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded font-bold border border-blue-200 shrink-0">
+                  Ubah
+                </span>
               </div>
 
               {/* Field 3: Durasi Sewa */}
-              <div className="md:col-span-3 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3">
+              <div
+                onClick={() => setIsDateTimeModalOpen(true)}
+                className="md:col-span-3 bg-slate-100 hover:bg-slate-200/70 transition-colors rounded-xl px-3.5 py-2.5 flex items-center gap-3 cursor-pointer select-none"
+              >
                 <Clock className="w-5 h-5 text-slate-400 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <span className="text-[10px] text-slate-500 block font-semibold uppercase leading-none mb-0.5">
                     Durasi Sewa
                   </span>
-                  <select
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    className="w-full bg-transparent text-xs font-bold text-slate-900 focus:outline-none cursor-pointer"
-                  >
-                    <option value="1 Hari">1 Hari (24 Jam)</option>
-                    <option value="2 Hari">2 Hari</option>
-                    <option value="3 Hari">3 Hari</option>
-                    <option value="7 Hari">7 Hari (Mingguan)</option>
-                    <option value="30 Hari">30 Hari (Bulanan)</option>
-                  </select>
+                  <span className="text-xs font-bold text-slate-900 block truncate">
+                    {durationDays} Hari ({durationDays * 24} Jam)
+                  </span>
                 </div>
+                <span className="text-xs text-slate-400">▾</span>
               </div>
 
               {/* Tombol Search (Navy Button with Magnifying Glass) */}
@@ -557,7 +568,7 @@ export default function RentalLandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredCars.map((car) => {
               const activePrice =
-                duration === '30 Hari' && car.pricePerMonth
+                durationDays >= 30 && car.pricePerMonth
                   ? car.pricePerMonth
                   : rentType === 'dengan_sopir' && car.withDriverPrice
                   ? car.withDriverPrice
@@ -628,7 +639,7 @@ export default function RentalLandingPage() {
                     <div className="pt-3 border-t border-slate-100 flex items-baseline justify-between mb-3">
                       <div>
                         <span className="text-[10px] text-slate-400 block font-medium">
-                          {duration === '30 Hari'
+                          {durationDays >= 30
                             ? 'Tarif Bulanan'
                             : rentType === 'dengan_sopir'
                             ? 'Dengan Supir / 24 Jam'
@@ -639,7 +650,7 @@ export default function RentalLandingPage() {
                         </span>
                       </div>
                       <span className="text-[10px] text-slate-400">
-                        {duration === '30 Hari' ? '/bln' : '/hari'}
+                        {durationDays >= 30 ? '/bln' : '/hari'}
                       </span>
                     </div>
 
@@ -647,9 +658,10 @@ export default function RentalLandingPage() {
                       type="button"
                       onClick={() => {
                         setSelectedCar(car);
+                        setBookingDays(durationDays);
                         setBookingSuccess(false);
                       }}
-                      className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                      className="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <span>Booking Unit Ini</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -826,6 +838,22 @@ export default function RentalLandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* ── MODAL RANGE CALENDAR (OriginUI) + 30-MIN TIME SLOTS (21st.dev Appointment) ── */}
+      <RentalDateTimeModal
+        isOpen={isDateTimeModalOpen}
+        onClose={() => setIsDateTimeModalOpen(false)}
+        onConfirm={({ startDate, endDate, pickupTime, returnTime, totalDays }) => {
+          const fromMonth = MONTH_NAMES_SHORT[startDate.getMonth()];
+          const toMonth = MONTH_NAMES_SHORT[endDate.getMonth()];
+          const fromDay = DAY_NAMES_SHORT[startDate.getDay()];
+          const toDay = DAY_NAMES_SHORT[endDate.getDay()];
+
+          setStartDateStr(`${fromDay}, ${startDate.getDate()} ${fromMonth}, ${pickupTime}`);
+          setEndDateStr(`${toDay}, ${endDate.getDate()} ${toMonth}, ${returnTime}`);
+          setDurationDays(totalDays);
+        }}
+      />
 
       {/* ── MODAL BOOKING CEPAT (Anti-slop: 2 input pendek) ── */}
       {selectedCar && (
